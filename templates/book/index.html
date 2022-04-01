@@ -1,0 +1,17 @@
+{% extends '_base.html' %}
+
+{% block header %}
+
+<h1> {{header}} </h1>
+
+{% endblock header %}
+
+{% block content %}
+
+<p><h3> {{content_title}} </h3></p>
+
+{{content}}
+
+<li><a href="{% url 'list_all' %}">List all available books</a></li>
+
+{% endblock %}
