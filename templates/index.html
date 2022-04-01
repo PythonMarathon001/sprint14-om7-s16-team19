@@ -1,0 +1,22 @@
+{% extends '_base.html' %}
+
+{% block header %}
+
+<h1> {{header}} </h1>
+
+{% endblock header %}
+
+{% block content %}
+
+<p><h3> {{content_title}} </h3></p>
+
+{{content}}
+
+<p></p>
+
+<li><a href="{% url 'authentication' %}">Authentication</a></li>
+<li><a href="{% url 'author' %}">Author</a></li>
+<li><a href="{% url 'book' %}">Book</a></li>
+<li><a href="{% url 'order' %}">Order</a></li>
+
+{% endblock %}
