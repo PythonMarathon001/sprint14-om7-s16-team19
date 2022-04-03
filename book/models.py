@@ -161,3 +161,18 @@ class Book(models.Model):
         """
         all_users = Book.objects.all()
         return list(all_users)
+
+    @staticmethod
+    def get_all_ordered(order_by, filter):
+        """
+        returns data for json request with QuerySet of filtered and ordered books
+        """
+        all_books = Book.objects.filter(**filter).order_by(*order_by)
+        return list(all_books)
+    
+    def all_authors_string(self):
+        """
+        Returns a list of authors as a string enumeration. 
+        """
+        autors = [author.surname_initials() for author in Author.objects.filter(books__id = self.id)]
+        return ", ".join(autors)

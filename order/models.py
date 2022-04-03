@@ -68,8 +68,8 @@ class Order(models.Model):
         self.save()
 
     @staticmethod
-    def get_all():
-        all_order = list(Order.objects.all())
+    def get_all(order_by):
+        all_order = list(Order.objects.all().order_by(*order_by))
         return all_order
 
     @staticmethod
