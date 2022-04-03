@@ -41,10 +41,12 @@ def lookup(request):
         elif data['mode'] == 'author':
             author_ids = Author.objects.all().filter(Q(name__contains = data['searching'])| Q(surname__contains = data['searching'])| Q(patronymic__contains = data['searching'])).values_list('id')
             print(author_ids)
-            list_of_books = Book.objects.all().filter(authors__in = author_ids)
+            # list_of_books = Book.objects.all().filter(authors__in = author_ids)
+            list_of_books = Book.objects.all().filter(Q(authors__name__contains = data['searching'])| Q(authors__surname__contains = data['searching'])| Q(authors__patronymic__contains = data['searching']))
     return render(request, 'book/list.html', {'header': f'List of books by {data["mode"]}', 'content': list_of_books})
 
 def passed(request):
-    overdu_users_id = Order.objects.all().filter(plated_end_at__lte=Now()).values_list('user_id')
+    overdu_users_id = Order.objects.all().filter(Q(plated_end_at__lte=Now()) & Q(end_at__isnull = True)).values_list('user_id')
     users_info = CustomUser.objects.all().filter(pk__in = overdu_users_id).values_list('first_name', 'last_name')
+
 
