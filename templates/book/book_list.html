@@ -18,8 +18,11 @@
 <p><h3> {{content_title}} </h3></p>
 
 <ul>
-	{% for item in content %}
-<li><strong>{{item}},</strong> </li>
+	{% for book in content %}
+<li><strong>Name: {{book.name}},</strong> 
+	<br>
+	<br>Author/s: {{book.authors}}
+	<br>Description: {{book.description}}</li>
 <br>
 	{% endfor %}
 </ul>

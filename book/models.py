@@ -2,7 +2,6 @@ from django.db import models, IntegrityError, DataError
 
 from author.models import Author
 
-
 class Book(models.Model):
     """
         This class represents an Author. \n
@@ -161,3 +160,4 @@ class Book(models.Model):
         """
         all_users = Book.objects.all()
         return list(all_users)
+

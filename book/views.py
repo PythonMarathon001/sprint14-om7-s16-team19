@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
-from book.models import *
-from order.models import *
+from book.models import Book
+from order.models import Order
+from author.models import Author
+from authentication.models import CustomUser 
+from django.db.models.functions import Now
 
 # Create your views here.
 
@@ -11,7 +14,7 @@ def index(request):
 
 def list_all(request):
     content = Book.get_all()
-    return render(request, 'book/list.html', {'title': 'List', 'content_title': 'List of all books' ,'content': content})
+    return render(request, 'book/book_list.html', {'title': 'List', 'content_title': 'List of all books' ,'content': content})
 
 def by_id(request, book_id):
 
@@ -22,6 +25,11 @@ def by_id(request, book_id):
         return redirect('book')
 
 def unordered(request):
-    ordered_books = Order.objects.all()
-    result = Book.objects.exclude(id=1)
-    return render(request, 'book/index.html', {'title': 'Unordered', 'content_title':'List of all unordered books', 'content': ['test boo 1', 'test book 2']})
+    ordered = Order.objects.all().values_list('book_id')
+    unordered_books = list(Book.objects.all().exclude(id__in = ordered))
+    return render(request, 'book/list.html', {'title': 'Unordered', 'content_title': 'List of unordered books', 'content': unordered_books})
+
+def passed(request):
+    overdu_users_id = Order.objects.all().filter(plated_end_at__lte=Now()).values_list('user_id')
+    users_info = CustomUser.objects.all().filter(pk__in = overdu_users_id).values_list('first_name', 'last_name')
+
