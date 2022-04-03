@@ -3,7 +3,6 @@ from book.models import Book
 from order.models import Order
 from author.models import Author
 from authentication.models import CustomUser 
-from django.db.models.functions import Now
 from django.db.models import Q
 
 # Create your views here.
@@ -39,15 +38,9 @@ def lookup(request):
         elif data['mode'] == 'description':
             list_of_books = Book.objects.filter(description__contains = data['searching'])
         elif data['mode'] == 'author':
-            author_ids = Author.objects.filter(Q(name__contains = data['searching'])| Q(surname__contains = data['searching'])| Q(patronymic__contains = data['searching'])).values_list('id')
+            # author_ids = Author.objects.filter(Q(name__contains = data['searching'])| Q(surname__contains = data['searching'])| Q(patronymic__contains = data['searching'])).values_list('id')
             list_of_books = Book.objects.filter(Q(authors__name__contains = data['searching'])| Q(authors__surname__contains = data['searching'])| Q(authors__patronymic__contains = data['searching']))
     return render(request, 'book/list.html', {'header': f'List of books by {data["mode"]}', 'content': list_of_books})
-
-def passed(request):
-    overdu_users_id = Order.objects.filter(Q(plated_end_at__lte=Now()) & Q(end_at__isnull = True)).values_list('user_id')
-    users_info = CustomUser.objects.filter(pk__in = overdu_users_id).values_list('first_name', 'last_name')
-
-    return render(request, 'book/list.html', {'title': 'List', 'content_title': 'List of all books' ,'content': users_info})
 
 def book_list(request):
     
