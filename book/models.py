@@ -160,4 +160,3 @@ class Book(models.Model):
         """
         all_users = Book.objects.all()
         return list(all_users)
-
