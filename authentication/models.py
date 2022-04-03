@@ -221,3 +221,11 @@ class CustomUser(AbstractBaseUser):
         returns str role name
         """
         return self.get_role_display()
+
+    def surname_initials(self):
+        """
+        returns surname initials.
+        """
+        patronymic_is_not_empty = self.middle_name and self.middle_name.strip()
+        middle_name  = f"{self.middle_name[0]}." if patronymic_is_not_empty else ""
+        return f"{self.last_name} {self.first_name[0]}.{middle_name}.".format(**vars())

@@ -1,0 +1,87 @@
+{% extends '_base.html' %}
+
+
+{% block title %}
+       
+<title>{{ title }}</title>
+
+{% endblock title%}
+
+{% block header %}
+
+<h1> {{header}} </h1>
+
+{% endblock header %}
+
+{% block content %}
+
+<p><h3> {{content_title}} </h3></p>
+
+<form action="{% url 'book_list' %}" method="get">
+	<fieldset>
+		<legend>Book filter</legend>	
+		<div> 
+			<label for="book_id">Book id:</label>
+			<input type="text" name="book_id" value="{{filters.book_id}}">
+		</div>
+		<div> 
+			<label for="author_id">Author:</label>
+			<select name="author_id">
+				<option value=0>All</option>
+				{% for author in authors %}
+				<option value={{author.id}} {% if author.id == filters.author_id %} selected {% endif %} >{{author.surname_initials}}</option>
+				{% endfor %}				
+			</select>
+		</div>		
+	</fieldset>
+	<fieldset>
+		<legend>Book order</legend>
+		<div>
+			by name:
+
+			<input type="radio" id="name_Choice0"
+				name="name" value="none" {% if orders_by.name == 'none' %} checked {% endif %} >
+			<label for="name_Choice0">None</label>
+
+			<input type="radio" id="name_Choice1"
+				name="name" value="asc" {% if orders_by.name == 'asc' %} checked {% endif %} >
+			<label for="name_Choice1">ASC</label>
+	
+			<input type="radio" id="name_Choice2"
+				name="name" value="desc" {% if orders_by.name == 'desc' %} checked {% endif %} >
+			<label for="name_Choice2">DESC</label>
+		
+		</div>
+		<div>
+			by count:
+
+			<input type="radio" id="name_Choice0"
+				name="count" value="none" {% if orders_by.count == 'none' %} checked {% endif %} >
+			<label for="name_Choice0">None</label>
+
+			<input type="radio" id="count_Choice1"
+				name="count" value="asc" {% if orders_by.count == 'asc' %} checked {% endif %} >
+			<label for="count_Choice1">ASC</label>
+	
+			<input type="radio" id="count_Choice2"
+				name="count" value="desc" {% if orders_by.count == 'desc' %} checked {% endif %} >
+			<label for="count_Choice2">DESC</label>
+
+		</div>
+	</fieldset>	
+	<div>
+	  <button type="submit">Reload</button>
+	</div>
+	<br>
+  </form>
+
+<ul>
+	{% for book in content %}
+<li> Книга "{{ book.name }}". {{ book.all_authors_string }}</li>
+<p></p>
+	{% endfor %}
+</ul>
+
+<a href="{% url 'book' %}">Back</a>
+
+{% endblock %}
