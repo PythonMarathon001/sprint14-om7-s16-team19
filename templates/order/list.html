@@ -17,7 +17,7 @@
 
 <p><h3> {{content_title}} </h3></p>
 
-<form action="{% url 'order_list' %}" method="get">
+<form action="{% url 'order' %}" method="get">
 	<fieldset>
 		<legend>Ordering</legend>
 		<div>
@@ -55,6 +55,6 @@
 	{% endfor %}
 </ul>
 
-<a href="{% url 'order' %}">Back</a>
+<a href="{% url 'index' %}">Back</a>
 
 {% endblock %}
