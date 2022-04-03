@@ -32,6 +32,15 @@
 				<option value={{author.id}} {% if author.id == filters.author_id %} selected {% endif %} >{{author.surname_initials}}</option>
 				{% endfor %}				
 			</select>
+		</div>	
+		<div> 
+			<label for="user_id">User:</label>
+			<select name="user_id">
+				<option value=0>All</option>
+				{% for user in users %}
+				<option value={{user.id}} {% if user.id == filters.user_id %} selected {% endif %} >{{user.surname_initials}}</option>
+				{% endfor %}				
+			</select>
 		</div>		
 	</fieldset>
 	<fieldset>

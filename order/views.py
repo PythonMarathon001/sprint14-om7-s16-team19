@@ -12,10 +12,12 @@ def order_list(request):
     
     if request.method == 'GET':
         
-        end_at = request.GET['end_at'] if 'end_at' in request.GET else 'asc'
+        data = request.GET
+        
+        end_at = data['end_at'] if 'end_at' in data else 'asc'
         order_by.append('end_at' if end_at == 'asc' else '-end_at')
         
-        plated_end_at = request.GET['plated_end_at'] if 'plated_end_at' in request.GET else 'asc'
+        plated_end_at = data['plated_end_at'] if 'plated_end_at' in data else 'asc'
         order_by.append('plated_end_at' if plated_end_at == 'asc' else '-plated_end_at')
         
     content = Order.get_all(order_by)    

@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from book.models import *
 from author.models import *
+from authentication.models import *
+from order.models import *
 
 # Create your views here.
 
@@ -19,28 +21,59 @@ def book_list(request):
     order_by = []
     book_id = ""
     author_id = 0
+    user_id = 0
     name = 'none'
     count = 'none'
     authors = list(Author.objects.all())
+    users = list(CustomUser.objects.all())
     
     if request.method == 'GET':
- 
-        if 'book_id' in request.GET and not request.GET['book_id'] == "":
-            book_id = request.GET['book_id']
-            filter['id'] = book_id
-            
-        if 'author_id' in request.GET and not request.GET['author_id'] == "0":
-            author_id = int(request.GET['author_id'])
-            #author_obj = Author.objects.get(pk=author_id)
+        
+        data = request.GET
+                
+        if 'author_id' in data and not data['author_id'] == "0":
+            author_id = int(data['author_id'])
             filter['authors__id'] = author_id
+            
+        if 'user_id' in data and not data['user_id'] == "0":
+            user_filter = {}
+            user_id =  int(data['user_id'])
+            if 'book_id' in data and not data['book_id'] == "":
+                book_id =  int(data['book_id'])
+                user_filter['book__pk'] = book_id           
+            user_filter['user__pk'] = user_id
+            user_books_idlist = [order.book_id for order in list(Order.objects.filter(**user_filter))]
+            filter['id__in'] = user_books_idlist
+        else:
+            if 'book_id' in data and not data['book_id'] == "":
+                book_id = data['book_id']
+                filter['id'] = book_id
                    
-        if 'name' in request.GET and not request.GET['name'] == 'none':
-            name = request.GET['name']
+        if 'name' in data and not data['name'] == 'none':
+            name = data['name']
             order_by.append('name' if name == 'asc' else '-name')
         
-        if 'count' in request.GET and not request.GET['count'] == 'none':
-            count = request.GET['count']
+        if 'count' in data and not data['count'] == 'none':
+            count = data['count']
             order_by.append('count' if count == 'asc' else '-count')
         
     content = Book.get_all_ordered(order_by, filter)    
-    return render(request, 'book/list_part2.html', {'title': 'List', 'content_title': 'List of all books', 'content': content, 'authors':authors, 'filters': {'book_id': book_id, 'author_id': author_id}, 'orders_by': {'name': name, 'count': count}})
+    
+    return render(request, 
+                  'book/list_part2.html', 
+                  {
+                      'title': 'List', 
+                      'content_title': 'List of all books', 
+                      'content': content, 
+                      'authors':authors, 
+                      'users':users, 
+                      'filters': {
+                          'book_id': book_id, 
+                          'author_id': author_id, 
+                          'user_id': user_id
+                          },
+                      'orders_by': {
+                          'name': name, 
+                          'count': count
+                          }
+                      })
