@@ -16,3 +16,8 @@ def rules(request):
     return render(request, "rules.html", {'title': 'Правила', 
                                          'content_title': 'Адміністрування бібліотеки / Статистика та звіти', 
                                          })
+    
+def reconstruction(request):
+    return render(request, "reconstruction.html", {'title': 'Розділ на реконструції', 
+                                         'content_title': 'Розділ на реконструції', 
+                                         })
