@@ -44,7 +44,6 @@
                   <li><a class="dropdown-item" href="{% url 'reconstruction' %}">Видача книг ⊖</a></li>
                   <li><a class="dropdown-item" href="{% url 'reconstruction' %}">Прийняття книг ⊕</a></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="\{% url 'debtor_report' %\}">Звіт по боржниках</a></li>
                   <li><a class="dropdown-item" href="{% url 'reconstruction' %}">Звіт по залишках</a></li>
                   <li><a class="dropdown-item" href="{% url 'reconstruction' %}">Вивчення попиту</a></li>
                 </ul>
@@ -55,6 +54,7 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li><a class="dropdown-item" href="{% url 'user' %}">Список читачів</a></li>
+                  <li><a class="dropdown-item" href="{% url 'overdue' %}">Звіт по боржниках</a></li>
                   <li><a class="dropdown-item" href="\{% url 'user_registraton' %\}">Зареєструвати читача</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="\{% url 'user_search' %\}">Пошук читачів</a></li>

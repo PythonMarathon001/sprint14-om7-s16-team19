@@ -16,7 +16,6 @@ class UserList(ListView):
                       
         return ListView.get(self, request, *args, **kwargs)  
     
-
     
     def get_context_data(self, **kwargs):
       
@@ -27,21 +26,20 @@ class UserList(ListView):
         return context
    
     def get_queryset(self):
- 
-        # overdu_users_id = Order.objects.filter(Q(plated_end_at__lte=Now()) & Q(end_at__isnull = True)).values_list('user_id')
-        # queryset = CustomUser.objects.filter(pk__in = overdu_users_id).values_list('first_name', 'last_name')
   
         queryset = CustomUser.get_all()   
         
         return queryset    
 
 
-# def users(request):
+def overdue(request):
 
-#     if request.GET:
-#         overdu_users_id = Order.objects.filter(Q(plated_end_at__lte=Now()) & Q(end_at__isnull = True)).values_list('user_id')
-#         users_info = CustomUser.objects.filter(pk__in = overdu_users_id).values_list('first_name', 'last_name')
-#     else:
-#         users_info = CustomUser.get_all().values_list()
+    users = CustomUser.objects.filter(Q(order__plated_end_at__lte=Now()) & Q(order__end_at__isnull = True))
+    
+    context = {}
+    context['title'] = 'Список читачів'
+    context['content_title'] = 'Адміністрування бібліотеки / Читачі'
+    context['users'] = users
 
-#     return render(request, 'authentication/index.html', {'title': 'List', 'content_title': 'List of all books' ,'content': users_info})
+
+    return render(request, 'authentication/index.html', context)

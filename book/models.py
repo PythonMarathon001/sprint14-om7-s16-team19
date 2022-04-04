@@ -175,4 +175,3 @@ class Book(models.Model):
         """
         autors = [author.surname_initials() for author in Author.objects.filter(books__id = self.id)]
         return ", ".join(autors)
-        

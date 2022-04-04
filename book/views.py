@@ -47,7 +47,7 @@ class BookListSearch(ListView):
             user_filter['user__pk'] = self.user_id
             user_books_idlist = [order.book_id for order in list(Order.objects.filter(**user_filter))]
             self.filter['id__in'] = user_books_idlist
-        #
+
         if 'search_en' in data and data['search_en'] == 'on':
             self.search_en = data['search_en']
             self.author_info = data['author_info']
@@ -57,7 +57,7 @@ class BookListSearch(ListView):
                             (Q(authors__name__icontains = self.author_info) | \
                              Q(authors__surname__icontains = self.author_info) | \
                              Q(authors__patronymic__icontains = self.author_info) )
-        #
+        
         else:
             if 'book_id' in data and not data['book_id'] == "":
                 self.book_id = data['book_id']
@@ -129,13 +129,6 @@ class BookListAll(ListView):
         return queryset  
 
 
-
-def index(request):
-    
-    return render(request, 'book/index.html', {'title': 'Book...'})
-
-
-
 def by_id(request, book_id):
 
     book_by_id = Book.get_by_id(book_id)
@@ -149,19 +142,11 @@ def by_id(request, book_id):
         return redirect('book/list')
 
 def unordered(request):
-    ordered = Order.objects.values_list('book_id')
-    unordered_books = list(Book.objects.exclude(id__in = ordered))
-    return render(request, 'book/list.html', {'title': 'Unordered', 'content_title': 'List of unordered books', 'content': unordered_books})
+    
+    unordered_books = Book.objects.exclude(id__in = Order.objects.values_list('book_id'))
+    context = {}
+    context['title'] = 'Список читачів'
+    context['content_title'] = 'Адміністрування бібліотеки / Доступні книжки'
+    context['books'] = unordered_books
 
-def lookup(request):
-    data = request.GET
-    if data:
-        print(data)
-        if data['mode'] == 'name':
-            list_of_books = Book.objects.filter(name__contains = data['searching'])
-        elif data['mode'] == 'description':
-            list_of_books = Book.objects.filter(description__contains = data['searching'])
-        elif data['mode'] == 'author':
-            # author_ids = Author.objects.filter(Q(name__contains = data['searching'])| Q(surname__contains = data['searching'])| Q(patronymic__contains = data['searching'])).values_list('id')
-            list_of_books = Book.objects.filter(Q(authors__name__contains = data['searching'])| Q(authors__surname__contains = data['searching'])| Q(authors__patronymic__contains = data['searching']))
-    return render(request, 'book/list.html', {'header': f'List of books by {data["mode"]}', 'content': list_of_books})
+    return render(request, 'book/book_list.html', context)
