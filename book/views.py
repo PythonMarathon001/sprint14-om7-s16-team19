@@ -44,7 +44,7 @@ class BookListSearch(ListView):
                 self.book_name = data['book_name']
                 user_filter['book__name__icontains'] = self.book_name              
                            
-            self.user_filter['user__pk'] = self.user_id
+            user_filter['user__pk'] = self.user_id
             user_books_idlist = [order.book_id for order in list(Order.objects.filter(**user_filter))]
             self.filter['id__in'] = user_books_idlist
         #
