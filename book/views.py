@@ -52,10 +52,11 @@ class BookListSearch(ListView):
             self.search_en = data['search_en']
             self.author_info = data['author_info']
             self.book_info = data['book_info']
-            self.q_filter = (Q(name__icontains=self.book_info) |\
-                          Q(authors__name__icontains = self.author_info) | \
-                          Q(authors__surname__icontains = self.author_info) | \
-                          Q(authors__patronymic__icontains = self.author_info) )
+            self.q_filter = (Q(name__icontains = self.book_info) | \
+                             Q(description__icontains = self.book_info)) & \
+                            (Q(authors__name__icontains = self.author_info) | \
+                             Q(authors__surname__icontains = self.author_info) | \
+                             Q(authors__patronymic__icontains = self.author_info) )
         #
         else:
             if 'book_id' in data and not data['book_id'] == "":
