@@ -66,7 +66,7 @@ class BookListSearch(ListView):
       
         context = super(BookListSearch, self).get_context_data(**kwargs)
         context['title'] = 'Список книг'
-        context['content_title'] = 'Адміністрування бібліотеки / Список книг в наявності'
+        context['content_title'] = 'Адміністрування бібліотеки / Розширений пошук'
         context['authors'] = self.authors
         context['users'] = self.users
         context['orders_by'] = {'name': self.name, 'count': self.count}
@@ -85,15 +85,35 @@ class BookListSearch(ListView):
 
         return queryset  
 
+class BookListAll(ListView):
+    
+    model = Book
+    template_name = "book/book_list.html"
+    context_object_name = "books"
+  
+    def get_context_data(self, **kwargs):
+      
+        context = super(BookListAll, self).get_context_data(**kwargs)
+        context['title'] = 'Список книг'
+        context['content_title'] = 'Адміністрування бібліотеки / Повний список книг'
+   
+        return context
+   
+    def get_queryset(self):
+        
+        queryset = Book.get_all()
+
+        return queryset  
+
 
 def index(request):
     
     return render(request, 'book/index.html', {'title': 'Book...'})
 
 
-def list_all(request):
-    content = Book.get_all()
-    return render(request, 'book/book_list.html', {'title': 'List', 'content_title': 'List of all books' ,'content': content})
+# def list_all(request):
+#     content = Book.get_all()
+#     return render(request, 'book/book_list.html', {'title': 'List', 'content_title': 'List of all books' ,'content': content})
 
 def by_id(request, book_id):
 

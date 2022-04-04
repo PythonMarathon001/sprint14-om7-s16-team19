@@ -15,19 +15,27 @@
 
 {% block content %}
 
-<p><h3> {{content_title}} </h3></p>
+<div align = 'center'>
+    <div >
+		<h1>{{content_title}}</h1>
+	</div>
+</div>
 
-<ul>
-	{% for book in content %}
-<li><strong>Name: {{book.name}},</strong> 
-	<br>
-	<br>Author/s: {{book.authors}}
-	<br>Description: {{book.description}}</li>
-<br>
-	{% endfor %}
-</ul>
 
-<li><a href="{% url 'book' %}">Back</a></li>
+
+{% for book in books %}
+<div class="card">
+  <h5 class="card-header">{{book.name}}</h5>
+  <div class="card-body">
+    <h5 class="card-title"> {{book.all_authors_string}} </h5>
+    <p class="card-text">{{book.description}}</p>
+    <a href="#" class="btn btn-primary">Деталі</a>
+  </div>
+</div>
+{% endfor %}
+
+
+<li><a href="{% url 'index' %}">Back</a></li>
 
 
 {% endblock %}
