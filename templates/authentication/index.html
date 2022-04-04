@@ -15,14 +15,18 @@
 
 {% block content %}
 
-<p><h3> {{content_title}} </h3></p>
+<div align = 'center'>
+    <div >
+		<h1>{{content_title}}</h1>
+	</div>
+</div>
 
-<ul>
-	{% for item in content %}
-<li><strong>{{item}},</strong> </li>
-<br>
+
+<div class="list-group"  align = 'left'>
+	{% for user in users %}
+	<button type="button" class="list-group-item list-group-item-action"  width = '200'>  {{ user.surname_initials }}</button>
 	{% endfor %}
-</ul>
+</div>
 
 <li><a href="{% url 'index' %}">Back</a></li>
 
