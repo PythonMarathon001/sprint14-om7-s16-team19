@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from order.models import Order
 
@@ -46,19 +46,11 @@ def index(request):
     return render(request, 'order/index.html', {'title': 'Order...'})
 
 
-# def order_list(request):
+def order_by_id(request, order_id):
+
+    book_by_id = Order.get_by_id(order_id)
+    if book_by_id:
+        return render(request, 'order/element.html', {'title': f'Замовлення №{order_id}', 'content_title': f'Деталі замовлення №{order_id}', 'content': book_by_id})
+    else:
+        return redirect('order')
     
-#     order_by = []
-    
-#     if request.method == 'GET':
-        
-#         data = request.GET
-        
-#         end_at = data['end_at'] if 'end_at' in data else 'asc'
-#         order_by.append('end_at' if end_at == 'asc' else '-end_at')
-        
-#         plated_end_at = data['plated_end_at'] if 'plated_end_at' in data else 'asc'
-#         order_by.append('plated_end_at' if plated_end_at == 'asc' else '-plated_end_at')
-        
-#     content = Order.get_all(order_by)    
-#     return render(request, 'order/list.html', {'title': 'List', 'content_title': 'List of all orders', 'content': content, 'orders_by': {'end_at': end_at, 'plated_end_at': plated_end_at}})
