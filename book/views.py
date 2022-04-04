@@ -142,6 +142,11 @@ def by_id(request, book_id):
         return redirect('book/list')
 
 def unordered(request):
-    ordered = Order.objects.values_list('book_id')
-    unordered_books = list(Book.objects.exclude(id__in = ordered))
-    return render(request, 'book/book_list.html', {'title': 'Unordered', 'content_title': 'List of unordered books', 'books': unordered_books})
+    
+    unordered_books = Book.objects.exclude(id__in = Order.objects.values_list('book_id'))
+    context = {}
+    context['title'] = 'Список читачів'
+    context['content_title'] = 'Адміністрування бібліотеки / Доступні книжки'
+    context['books'] = unordered_books
+
+    return render(request, 'book/book_list.html', context)
