@@ -56,6 +56,28 @@
 					</select>
 				</div>
 			</div>
+			<br>
+			<div class="checkbox">
+				<label><input type="checkbox" name="search_en" {% if search_en == "on" %} checked {% endif %}>Пошук по частковим данним</label>
+			</div>
+		<div class="row">
+			<div class="col">
+				<div> 
+					<label for="author_info">Author information:</label>
+					<input  class="form-control form-control-sm" type="text" name="author_info" value="{{search_param.author_info}}">
+				</div>
+			</div>
+			<div class="col">
+			    <div> 
+				    <label for="book_info">Book information:</label>
+				    <input  class="form-control form-control-sm" type="text" name="book_info" value="{{search_param.book_info}}">
+			    </div>
+		    </div>
+		
+		</div>
+
+		
+
 		</div>		
 	</fieldset>
 	<fieldset>

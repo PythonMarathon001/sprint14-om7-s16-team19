@@ -1,0 +1,34 @@
+{% extends '_base.html' %}
+
+{% block title %}
+       
+<title>{{ title }}</title>
+
+{% endblock title%}
+
+{% block header %}
+
+<h1> {{header}} </h1>
+
+{% endblock header %}
+
+{% block content %}
+
+<div align = 'center'>
+    <div >
+		<h1>{{content_title}}</h1>
+	</div>
+</div>
+
+
+<div class="card">
+  <h5 class="card-header"><strong>{{content.name}}</strong></h5><br>
+  <div class="card-body">
+    <h5 class="card-title"><strong>Автор\и:</strong> {{content.all_authors_string}}</h5>
+    <p class="card-text"><strong>Опис:</strong> {{content.description}}</p>
+    <p class="card-text"><strong>Ідентифікаційний номер:</strong> {{content.id}}</p><br>
+    <a href="{% url 'list_all' %}" class="btn btn-primary">Назад</a>
+  </div>
+</div>
+
+{% endblock %}
