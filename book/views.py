@@ -106,22 +106,17 @@ class BookListAll(ListView):
         return queryset  
 
 
-def index(request):
-    
-    return render(request, 'book/index.html', {'title': 'Book...'})
-
-
-# def list_all(request):
-#     content = Book.get_all()
-#     return render(request, 'book/book_list.html', {'title': 'List', 'content_title': 'List of all books' ,'content': content})
-
 def by_id(request, book_id):
 
     book_by_id = Book.get_by_id(book_id)
+    context = { 'title': 'Детальна інформація',
+                'content_title': 'Адміністрування бібліотеки / Детальна інформація',
+                'content': book_by_id
+              }
     if book_by_id:
-        return render(request, 'book/index.html', {'title': 'book', 'content_title': 'Here is book', 'content': book_by_id})
+        return render(request, 'book/book_by_id.html', context)
     else:
-        return redirect('book')
+        return redirect('book/list')
 
 def unordered(request):
     ordered = Order.objects.values_list('book_id')

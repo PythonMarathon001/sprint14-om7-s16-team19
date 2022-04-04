@@ -29,7 +29,7 @@
   <div class="card-body">
     <h5 class="card-title"> {{book.all_authors_string}} </h5>
     <p class="card-text">{{book.description}}</p>
-    <a href="#" class="btn btn-primary">Деталі</a>
+    <a href="{% url 'by_id' book.id %}" class="btn btn-primary">Деталі</a>
   </div>
 </div>
 {% endfor %}
