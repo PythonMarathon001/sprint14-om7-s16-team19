@@ -18,10 +18,7 @@ class OrderList(ListView):
         
         self.plated_end_at = data['plated_end_at'] if 'plated_end_at' in data else 'asc'
         self.order_by.append('plated_end_at' if self.plated_end_at == 'asc' else '-plated_end_at')
-       
-        
-        
-        
+              
         return ListView.get(self, request, *args, **kwargs)  
     
 

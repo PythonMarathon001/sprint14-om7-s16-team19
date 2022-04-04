@@ -15,36 +15,47 @@
 
 {% block content %}
 
-<p><h3> {{content_title}} </h3></p>
+<div align = 'center'>
+    <div >
+		<h1>{{content_title}}</h1>
+	</div>
+</div>
 
 <form action="{% url 'book_list' %}" method="get">
 	<fieldset>
-		<legend>Book filter</legend>	
-		<div> 
-			<label for="book_id">Book id:</label>
-			<input type="text" name="book_id" value="{{filters.book_id}}">
-		</div>
-		<div> 
-			<label for="book_name">Book name:</label>
-			<input type="text" name="book_name" value="{{filters.book_name}}">
-		</div>		
-		<div> 
-			<label for="author_id">Author:</label>
-			<select name="author_id">
-				<option value=0>All</option>
-				{% for author in authors %}
-				<option value={{author.id}} {% if author.id == filters.author_id %} selected {% endif %} >{{author.surname_initials}}</option>
-				{% endfor %}				
-			</select>
-		</div>	
-		<div> 
-			<label for="user_id">User:</label>
-			<select name="user_id">
-				<option value=0>All</option>
-				{% for user in users %}
-				<option value={{user.id}} {% if user.id == filters.user_id %} selected {% endif %} >{{user.surname_initials}}</option>
-				{% endfor %}				
-			</select>
+		<legend>Book filter</legend>
+		<div class="row">
+				<div class="col">
+					
+				<div> 
+					<label for="book_id">Book id:</label>
+					<input  class="form-control form-control-sm" type="text" name="book_id" value="{{filters.book_id}}">
+				</div>
+				<div> 
+					<label for="book_name">Book name:</label>
+					<input  class="form-control form-control-sm"   type="text" name="book_name" value="{{filters.book_name}}">
+				</div>
+			</div>
+			<div class="col">		
+				<div> 
+					<label for="author_id">Author:</label>
+					<select name="author_id" class="form-select form-select-sm" aria-label=".form-select-sm example">
+						<option value=0>All</option>
+						{% for author in authors %}
+						<option value={{author.id}} {% if author.id == filters.author_id %} selected {% endif %} >{{author.surname_initials}}</option>
+						{% endfor %}				
+					</select>
+				</div>	
+				<div> 
+					<label for="user_id">User:</label>
+					<select name="user_id" class="form-select form-select-sm" aria-label=".form-select-sm example">
+						<option value=0>All</option>
+						{% for user in users %}
+						<option value={{user.id}} {% if user.id == filters.user_id %} selected {% endif %} >{{user.surname_initials}}</option>
+						{% endfor %}				
+					</select>
+				</div>
+			</div>
 		</div>		
 	</fieldset>
 	<fieldset>
@@ -83,17 +94,17 @@
 		</div>
 	</fieldset>	
 	<div>
-	  <button type="submit">Reload</button>
+	  <button  class="btn btn-primary" type="submit">Reload</button>
 	</div>
 	<br>
   </form>
 
-<ul>
-	{% for book in content %}
-<li> Книга "{{ book.name }}". {{ book.all_authors_string }}</li>
-<p></p>
+
+<div class="list-group"  align = 'left'>
+	{% for book in books %}
+	<button type="button" class="list-group-item list-group-item-action"  width = '200'>  Книга "{{ book.name }}". {{ book.all_authors_string }}</button>
 	{% endfor %}
-</ul>
+</div>
 
 <a href="{% url 'index' %}">Back</a>
 
