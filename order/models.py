@@ -53,10 +53,10 @@ class Order(models.Model):
 
     @staticmethod
     def get_by_id(order_id):
-
+        order_id = int(order_id)
         try:
-            user = Order.objects.get(id=order_id)
-            return user
+            order = Order.objects.get(id=order_id)
+            return order
         except Order.DoesNotExist:
             pass
 

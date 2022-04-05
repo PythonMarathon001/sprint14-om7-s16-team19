@@ -102,7 +102,7 @@ class BookListSearch(ListView):
     def get_queryset(self):
         
         if self.search_en == 'on':
-            queryset = Book.objects.filter(self.q_filter)
+            queryset = Book.objects.filter(self.q_filter).distinct()
         else:
             queryset = Book.get_all_ordered(self.order_by, self.filter)
 
