@@ -130,25 +130,26 @@ class BookListAll(ListView):
         return queryset
 
 
-def book_form(request, book_id=0):
-    book_id = 1 or book_id
-    # book_id = Book.objects.first().id or book_id
-    # form = AddPostForm
-    if request.method == "POST":
-        form = AddPostForm(request.POST)
-        if form.is_valid():
-            # print(form.cleaned_data)
-            form.save()
-            return redirect('book_form')
+def book_form(request, id=0):
+    if request.method == "GET":
+        if id == 0:
+            form = BookForm()
+        else:
+            try:
+                book = Book.objects.get(pk=id)
+            except Book.DoesNotExist:
+                return redirect("not_found_404")
+            form = BookForm(instance=book)
+        return render(request, "book/book_form.html", {"form": form})
     else:
-        form = AddPostForm()
-    book_by_id = Book.get_by_id(book_id)
-    context = {'title': 'Детальна інформація',
-               'content_title': 'Адміністрування бібліотеки / get-post книги',
-               'content': book_by_id,
-               'form': form,
-               }
-    return render(request, "book/book_form.html", context)
+        if id == 0:
+            form = BookForm(request.POST)
+        else:
+            book = Book.objects.get(pk=id)
+            form = BookForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+        return redirect('list_all')
 
 
 def by_id(request, book_id):

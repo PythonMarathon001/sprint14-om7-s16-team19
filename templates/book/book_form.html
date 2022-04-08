@@ -11,23 +11,27 @@
 
 
 {% block content %}
-<div align = 'center'>
-    <div >
-		<h1>{{ content_title }}</h1>
+	<div align = 'center'>
+		<div >
+			<h1>{{ content_title }}</h1>
+		</div>
 	</div>
-</div>
 
-<form action="{% url 'book_form' %}" method="post">
-	{% csrf_token %}
-<!--	{{ form.as_p }}-->
-	{% for field in form %}
-		<p><label for="{{ field.id_for_label }}">{{ field.label }}: </label>{{ field }}</p>
-		<div>{{ field.errors }}</div>
-	{% endfor %}
-	
-<!--	<p><label for="{{ form.name.id_for_label }}">{{ form.name.label }}: </label>{{ form.name }}</p>-->
-<!--	<div>{{ form.name.errors }}</div>-->
-	
-	<button type="submit">Зберегти</button>
-</form>
+	<form action="" method="post" autocomplete="off">
+		{% csrf_token %}
+
+		<div class="col" style="padding: 20px">
+			{% for field in form %}
+				<div style="padding-left: 10px; padding-top: 10px">
+					{{ field.label }}
+				</div>
+				<div style="padding: 10px">
+					{{ field }}
+				</div>
+			{% endfor %}
+
+			<button type="submit" class="btn btn-success">Зберегти</button>
+		</div>
+
+	</form>
 {% endblock %}

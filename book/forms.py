@@ -1,20 +1,17 @@
 from django import forms
+from django.core.exceptions import ValidationError
 
+from author.models import Author
 from book.models import Book
 
 
-class AddPostForm(forms.ModelForm):
-    # title = forms.CharField(max_length=255)
-    # slug = forms.SlugField(max_length=255)
-
+class BookForm(forms.ModelForm):
     # Для випадаючого списку:
     # def __init__(self, *args, **kwargs):
     #     super.__init__(self, *args, **kwargs)
     #     self.fields['dropwown_field'].empty_label = '--choose one of--'
-
     class Meta:
         model = Book
-        # fields = "__all__"
         fields = ["name", "description", "count", "authors"]
         widgets = {
             "name": forms.TextInput(attrs={'class': 'form-input'}),
